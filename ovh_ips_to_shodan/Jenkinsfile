@@ -1,0 +1,33 @@
+pipeline {
+    agent { label 'deployment' }
+    environment {
+        SHODAN_API_KEY = credentials('SHODAN_API_KEY')
+        OVH_APPLICATION_KEY = credentials('OVH_APPLICATION_KEY')
+        OVH_APPLICATION_SECRET = credentials('OVH_APPLICATION_SECRET')
+        OVH_CONSUMER_KEY = credentials('OVH_CONSUMER_KEY')
+    }
+    options {
+        timestamps ()
+        buildDiscarder(logRotator(numToKeepStr: "100"))
+    }
+    stages {
+        stage('Check new script from repository') {
+            steps {
+                checkout([$class                           : 'GitSCM', branches: [[name: '*/master']],
+                          doGenerateSubmoduleConfigurations: false,
+                          extensions                       : [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'scripts/ovh_ips_to_shodan']]]], submoduleCfg: [],
+                          userRemoteConfigs                : [[credentialsId: '35500a42-19cc-4b5a-851e-4754bbe2e2fb', url: 'git@domain.org:project/devops.git']]])
+            }
+        }
+        stage('Create Shodan Alerts') {
+            steps {
+                sh """#!/bin/bash
+                    pushd scripts/ovh_ips_to_shodan
+                    ./start.py
+                    """
+                // slackSend channel: "#devops", color: 'good', message: ":sailboat: <${env.BUILD_URL}|Jenkins job> restored MySQL TAR archive to the production."
+            }
+        }
+    }
+    // post { failure { slackSend channel: "#devops", color: 'danger', message: ":skull: The restore process of the MySQL database was unsuccessful." } }
+}
