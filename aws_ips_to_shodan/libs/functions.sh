@@ -134,8 +134,8 @@ delete_shodan_alert(){
 check_prj_name_not_empty(){
     project_name=$1
     if [[ -z $project_name  ]]; then
-        echo '*************************** Project name argument is empty I set myself to: onoff ***************************'
-        project_name='onoff'
+        echo '*************************** Project name argument is empty I set myself to: project ***************************'
+        project_name='project'
     fi
 }
 

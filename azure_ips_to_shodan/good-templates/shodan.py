@@ -20,7 +20,7 @@ print(shodan_alert_names)
 
 # for alert_name in shodan_alert_names:
 #     print(alert_name)
-#if content['name'] == 'onoff_stage_hot_db':
+#if content['name'] == 'project_stage_hot_db':
 #    print(content['name'])
 
 

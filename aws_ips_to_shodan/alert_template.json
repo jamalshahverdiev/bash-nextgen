@@ -21,7 +21,7 @@
     {
       "description": "Production DevOps Urgent",
       "args": {
-        "to": "devops_high@onoffapp.pagerduty.com"
+        "to": "devops_high@project.pagerduty.com"
       },
       "provider": "email",
       "id": "6MWsSAAMqsr3QQiv"
@@ -29,7 +29,7 @@
     {
       "description": null,
       "args": {
-        "to": "services@onoffapp.com"
+        "to": "services@project.com"
       },
       "provider": "email",
       "id": "default"

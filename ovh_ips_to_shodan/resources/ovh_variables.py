@@ -13,5 +13,5 @@ client = ovh.Client(
 )
 headers = {'Content-type': 'application/json'}
 template_name = "alert_template.json"
-project_name = 'onoff'
+project_name = 'project'
 service_names = client.get('/dedicated/server')

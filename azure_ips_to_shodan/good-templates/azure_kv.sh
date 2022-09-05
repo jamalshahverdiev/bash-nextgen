@@ -5,7 +5,7 @@ REGION='NorthEurope'
 # SP_NAME='python-apps-new'
 ENV_NAME='staging'
 SP_NAME="${ENV_NAME}-sp-shodan"
-KV_NAME="${ENV_NAME}-onoff-shodan-kv"
+KV_NAME="${ENV_NAME}-project-shodan-kv"
 KV_SECRET_NAME="${ENV_NAME}-secret-shodan"
 ROLE='Reader'
 
