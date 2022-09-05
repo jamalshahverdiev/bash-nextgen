@@ -1,0 +1,38 @@
+{
+    "name": "replace_alert_name",
+    "triggers": {
+      "malware": {},
+      "open_database": {},
+      "iot": {},
+      "internet_scanner": {},
+      "industrial_control_system": {},
+      "new_service": {},
+      "ssl_expired": {},
+      "vulnerable": {}
+    },
+    "has_triggers": true,
+    "expires": 0,
+    "notify": {},
+    "expiration": null,
+    "filters": {
+      "ip": [ ip_list_to_replace ]
+    },
+    "notifiers": [
+      {
+        "description": "Production DevOps Urgent",
+        "args": {
+          "to": "devops_high@onoffapp.pagerduty.com"
+        },
+        "provider": "email",
+        "id": "6MWsSAAMqsr3QQiv"
+      },
+      {
+        "description": null,
+        "args": {
+          "to": "services@onoffapp.com"
+        },
+        "provider": "email",
+        "id": "default"
+      }
+    ]
+}  
