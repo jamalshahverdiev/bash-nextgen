@@ -2,10 +2,7 @@
 
 . ./libs/aws-functions.sh
 
-if [ $# -lt 1 ]
-then
-    usage
-fi
+if [ $# -lt 1 ]; then usage; fi
 
 while getopts_long ':e: env:' OPTKEY; do
     case ${OPTKEY} in
