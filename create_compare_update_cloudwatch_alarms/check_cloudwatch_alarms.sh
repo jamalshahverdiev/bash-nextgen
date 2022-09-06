@@ -2,10 +2,7 @@
 
 . ./libs/functions.sh
 
-if [ $# -lt 1 ]
-then
-    usage
-fi
+if [ $# -lt 1 ]; then usage; fi
 
 while getopts_long ':g:u:c: get: update: check:' OPTKEY; do
     case ${OPTKEY} in
