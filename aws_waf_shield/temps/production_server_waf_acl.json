@@ -1,0 +1,140 @@
+{
+    "DefaultAction": { "Allow": {} },
+    "Name": "production_server_waf_acl",
+    "Description": "Production server WEB ACL.",
+    "Rules": [
+        {
+            "Name": "ProjectProductionAllow",
+            "OverrideAction": {"None":{}},
+            "Priority": 0,
+            "Statement": {
+                "RuleGroupReferenceStatement": {
+                  "ARN": "replace_ProjectProductionAllow_string"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "ProjectProductionAllow-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "ProjectProductionBlock",
+            "OverrideAction": {"None":{}},
+            "Priority": 1,
+            "Statement": {
+                "RuleGroupReferenceStatement": {
+                  "ARN": "replace_ProjectProductionBlock_string"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "ProjectProductionBlock-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },      
+        {
+            "Name": "AWSManagedRulesBotControlRuleSet",
+            "OverrideAction": {"None":{}},
+            "Priority": 2,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesBotControlRuleSet",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesBotControlRuleSet-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesAnonymousIpList",
+            "OverrideAction": {"None":{}},
+            "Priority": 3,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesAnonymousIpList",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesAnonymousIpList-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesAmazonIpReputationList",
+            "OverrideAction": {"None":{}},
+            "Priority": 4,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesAmazonIpReputationList",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesAmazonIpReputationList-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesAdminProtectionRuleSet",
+            "OverrideAction": {"None":{}},
+            "Priority": 5,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesAdminProtectionRuleSet",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesAdminProtectionRuleSet-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesKnownBadInputsRuleSet",
+            "OverrideAction": {"None":{}},
+            "Priority": 7,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesKnownBadInputsRuleSet",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesKnownBadInputsRuleSet-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "ProjectAccountTakeOver",
+            "Priority": 9,
+            "Statement": {
+              "RuleGroupReferenceStatement": {
+                "ARN": "replace_ProjectAccountTakeOver_string"
+              }
+            },
+            "OverrideAction": {
+              "None": {}
+            },
+            "VisibilityConfig": {
+              "SampledRequestsEnabled": true,
+              "CloudWatchMetricsEnabled": true,
+              "MetricName": "ProjectAccountTakeOver"
+            }
+        }
+    ],
+    "Scope": "REGIONAL",
+    "VisibilityConfig": {
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "Production_Server_WAF_ACL_Metric",
+        "SampledRequestsEnabled": true
+    }
+}

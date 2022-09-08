@@ -1,0 +1,222 @@
+[
+  {
+    "Name": "BlockInternalEndpoints",
+    "Priority": 0,
+    "Statement": {
+      "OrStatement": {
+        "Statements": [
+          {
+            "RegexPatternSetReferenceStatement": {
+              "ARN": "replace_InternalURLEndpoints_string",
+              "FieldToMatch": {
+                "UriPath": {}
+              },
+              "TextTransformations": [
+                {
+                  "Priority": 0,
+                  "Type": "NONE"
+                }
+              ]
+            }
+          },
+          {
+            "RegexPatternSetReferenceStatement": {
+              "ARN": "replace_InternalURLEndpoints1_string",
+              "FieldToMatch": {
+                "UriPath": {}
+              },
+              "TextTransformations": [
+                {
+                  "Priority": 0,
+                  "Type": "NONE"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "Action": {
+      "Block": {}
+    },
+    "VisibilityConfig": {
+      "SampledRequestsEnabled": true,
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "BlockInternalEndpoints"
+    }
+  },
+  {
+    "Name": "BlockUserAgentsOrExternalURIEndpoints",
+    "Priority": 1,
+    "Statement": {
+      "AndStatement": {
+        "Statements": [
+          {
+            "NotStatement": {
+              "Statement": {
+                "RegexPatternSetReferenceStatement": {
+                  "ARN": "replace_ProjectUserAgents_string",
+                  "FieldToMatch": {
+                    "SingleHeader": {
+                      "Name": "user-agent"
+                    }
+                  },
+                  "TextTransformations": [
+                    {
+                      "Priority": 0,
+                      "Type": "NONE"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "NotStatement": {
+              "Statement": {
+                "RegexPatternSetReferenceStatement": {
+                  "ARN": "replace_XUserAgentHeaders_string",
+                  "FieldToMatch": {
+                    "SingleHeader": {
+                      "Name": "x-user-agent"
+                    }
+                  },
+                  "TextTransformations": [
+                    {
+                      "Priority": 0,
+                      "Type": "NONE"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "NotStatement": {
+              "Statement": {
+                "RegexPatternSetReferenceStatement": {
+                  "ARN": "replace_ExcludeEndPoints_string",
+                  "FieldToMatch": {
+                    "UriPath": {}
+                  },
+                  "TextTransformations": [
+                    {
+                      "Priority": 0,
+                      "Type": "NONE"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "NotStatement": {
+              "Statement": {
+                "ByteMatchStatement": {
+                  "SearchString": "T1BUSU9OUw==",
+                  "FieldToMatch": {
+                    "Method": {}
+                  },
+                  "TextTransformations": [
+                    {
+                      "Priority": 0,
+                      "Type": "NONE"
+                    }
+                  ],
+                  "PositionalConstraint": "EXACTLY"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Action": {
+      "Block": {}
+    },
+    "VisibilityConfig": {
+      "SampledRequestsEnabled": true,
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "BlockUserAgentsOrExternalURIEndpoints"
+    }
+  },
+  {
+    "Name": "BlockShortUserAgents",
+    "Priority": 2,
+    "Statement": {
+      "RegexPatternSetReferenceStatement": {
+        "ARN": "replace_ProjectShortBadUserAgents_string",
+        "FieldToMatch": {
+          "SingleHeader": {
+            "Name": "user-agent"
+          }
+        },
+        "TextTransformations": [
+          {
+            "Priority": 0,
+            "Type": "NONE"
+          }
+        ]
+      }
+    },
+    "Action": {
+      "Block": {}
+    },
+    "VisibilityConfig": {
+      "SampledRequestsEnabled": true,
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "BlockShortUserAgents"
+    }
+  },
+  {
+    "Name": "BlockRequestsWithWeirdResponseHttpHeaders",
+    "Priority": 3,
+    "Statement": {
+      "AndStatement": {
+        "Statements": [
+          {
+            "RegexPatternSetReferenceStatement": {
+              "ARN": "replace_ProjectUserAgents_string",
+              "FieldToMatch": {
+                "SingleHeader": {
+                  "Name": "user-agent"
+                }
+              },
+              "TextTransformations": [
+                {
+                  "Priority": 0,
+                  "Type": "NONE"
+                }
+              ]
+            }
+          },
+          {
+            "SizeConstraintStatement": {
+              "FieldToMatch": {
+                "SingleHeader": {
+                  "Name": "x-xss-protection"
+                }
+              },
+              "ComparisonOperator": "GT",
+              "Size": 1,
+              "TextTransformations": [
+                {
+                  "Priority": 0,
+                  "Type": "NONE"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "Action": {
+      "Block": {}
+    },
+    "VisibilityConfig": {
+      "SampledRequestsEnabled": true,
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "BlockRequestsWithWeirdResponseHttpHeaders"
+    }
+  }
+]

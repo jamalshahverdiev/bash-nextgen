@@ -1,0 +1,60 @@
+{
+    "Name": "Register",
+    "Priority": 2,
+    "Statement": {
+      "AndStatement": {
+        "Statements": [
+          {
+            "ByteMatchStatement": {
+              "SearchString": "/mobile/onboarding/register",
+              "FieldToMatch": {
+                "UriPath": {}
+              },
+              "TextTransformations": [
+                {
+                  "Priority": 0,
+                  "Type": "NONE"
+                }
+              ],
+              "PositionalConstraint": "CONTAINS"
+            }
+          },
+          {
+            "OrStatement": {
+              "Statements": [
+                {
+                  "LabelMatchStatement": {
+                    "Scope": "LABEL",
+                    "Key": "awswaf:managed:aws:amazon-ip-list:AWSManagedIPReputationList"
+                  }
+                },
+                {
+                  "LabelMatchStatement": {
+                    "Scope": "LABEL",
+                    "Key": "awswaf:managed:aws:anonymous-ip-list:HostingProviderIPList"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "Action": {
+      "Count": {
+        "CustomRequestHandling": {
+          "InsertHeaders": [
+            {
+              "Name": "bad-ip",
+              "Value": "true"
+            }
+          ]
+        }
+      }
+    },
+    "VisibilityConfig": {
+      "SampledRequestsEnabled": true,
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "Register"
+    }
+}

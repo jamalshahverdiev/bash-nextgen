@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+rule_group_names='ProjectAccountTakeOver ProjectProductionBlock ProjectProductionAllow'
+region_name='eu-west-2'
+# region_name='eu-west-1'
+templates_directory='temps'
+json_for_prod_allow='waf-rules-template-project-prod-allow.json'
+json_for_prod_block='waf-rules-template-project-prod-block.json'
+json_for_prod_takeover='waf-rules-template-project-prod-takeover.json'
+dst_json_for_ipsets='waf-rule-template-dest.json'
+dst_rule_json_file='add-rule-ready.json'
+src_rule_json_file='production_server_waf_acl.json'
+url_endpoint_regex_name='ExternalURLEndpoints'
+web_acl_output_names='production_server_waf_acl production_webclient_waf_acl'

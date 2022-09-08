@@ -1,0 +1,143 @@
+{
+    "DefaultAction": {
+        "Allow": {}
+    },
+    "Name": "production-server-waf-acl",
+    "Description": "Production server WEB ACL.",
+    "Rules": [
+        {
+            "Name": "AWSManagedRulesBotControlRuleSet",
+            "OverrideAction": {"None":{}},
+            "Priority": 2,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesBotControlRuleSet",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesBotControlRuleSet-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesAnonymousIpList",
+            "OverrideAction": {"None":{}},
+            "Priority": 3,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesAnonymousIpList",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesAnonymousIpList-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesAmazonIpReputationList",
+            "OverrideAction": {"None":{}},
+            "Priority": 4,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesAmazonIpReputationList",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesAmazonIpReputationList-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesAdminProtectionRuleSet",
+            "OverrideAction": {"None":{}},
+            "Priority": 5,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesAdminProtectionRuleSet",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesAdminProtectionRuleSet-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesCommonRuleSet",
+            "OverrideAction": {"None":{}},
+            "Priority": 6,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesCommonRuleSet",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesCommonRuleSet-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesKnownBadInputsRuleSet",
+            "OverrideAction": {"None":{}},
+            "Priority": 7,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesKnownBadInputsRuleSet",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesKnownBadInputsRuleSet-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesLinuxRuleSet",
+            "OverrideAction": {"None":{}},
+            "Priority": 8,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesLinuxRuleSet",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesLinuxRuleSet-Metric",
+                "SampledRequestsEnabled": true
+            }
+        },
+        {
+            "Name": "AWSManagedRulesSQLiRuleSet",
+            "OverrideAction": {"None":{}},
+            "Priority": 9,
+            "Statement": {
+                "ManagedRuleGroupStatement": {
+                    "Name": "AWSManagedRulesSQLiRuleSet",
+                    "VendorName": "AWS"
+                }
+            },
+            "VisibilityConfig": {
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "AWSManagedRulesSQLiRuleSet-Metric",
+                "SampledRequestsEnabled": true
+            }
+        }
+    ],
+    "Scope": "REGIONAL",
+    "VisibilityConfig": {
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "Production-Server-WAF-ACL-Metric",
+        "SampledRequestsEnabled": true
+    }
+}

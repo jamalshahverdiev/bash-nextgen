@@ -1,0 +1,57 @@
+{
+    "Name": "RateLimitToLogin",
+    "Priority": 9,
+    "Statement": {
+      "RateBasedStatement": {
+        "Limit": 100,
+        "AggregateKeyType": "IP",
+        "ScopeDownStatement": {
+          "AndStatement": {
+            "Statements": [
+              {
+                "ByteMatchStatement": {
+                  "SearchString": "/mobile/onboarding/login",
+                  "FieldToMatch": {
+                    "UriPath": {}
+                  },
+                  "TextTransformations": [
+                    {
+                      "Priority": 0,
+                      "Type": "NONE"
+                    }
+                  ],
+                  "PositionalConstraint": "STARTS_WITH"
+                }
+              },
+              {
+                "OrStatement": {
+                  "Statements": [
+                      {
+                        "LabelMatchStatement": {
+                          "Scope": "LABEL",
+                          "Key": "awswaf:managed:aws:amazon-ip-list:AWSManagedIPReputationList"
+                        }
+                      },
+                      {
+                        "LabelMatchStatement": {
+                          "Scope": "LABEL",
+                          "Key": "awswaf:managed:aws:anonymous-ip-list:HostingProviderIPList"
+                        }
+                      }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "Action": {
+      "Count": {}
+    },
+    "VisibilityConfig": {
+      "SampledRequestsEnabled": true,
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "RateLimitToLogin"
+    }
+}

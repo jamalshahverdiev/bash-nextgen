@@ -1,0 +1,136 @@
+[
+  {
+    "Name": "ExcludeEndPoints",
+    "Priority": 1,
+    "Statement": {
+      "RegexPatternSetReferenceStatement": {
+        "ARN": "replace_ExcludeEndPoints_string",
+        "FieldToMatch": {
+          "UriPath": {}
+        },
+        "TextTransformations": [
+          {
+            "Priority": 0,
+            "Type": "NONE"
+          }
+        ]
+      }
+    },
+    "Action": {
+      "Allow": {}
+    },
+    "VisibilityConfig": {
+      "SampledRequestsEnabled": true,
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "ExcludeEndPoints"
+    }
+  },
+  {
+      "Name": "AllowSite24x7IPAddresses",
+      "Priority": 2,
+      "Statement": {
+        "IPSetReferenceStatement": {
+          "ARN": "replace_SITE24_SERVERS_string"
+        }
+      },
+      "Action": {
+        "Allow": {}
+      },
+      "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "AllowSite24x7IPAddresses"
+      }
+  },
+  {
+      "Name": "AllowIPAddresses",
+      "Priority": 3,
+      "Statement": {
+        "OrStatement": {
+          "Statements": [
+            {
+              "IPSetReferenceStatement": {
+                "ARN": "replace_DEFAULT_VPC_string"
+              }
+            },
+            {
+              "IPSetReferenceStatement": {
+                "ARN": "replace_SMPP_VPC_string"
+              }
+            },
+            {
+              "IPSetReferenceStatement": {
+                "ARN": "replace_VOIP_SERVERS_string"
+              }
+            },
+            {
+              "IPSetReferenceStatement": {
+                "ARN": "replace_EIP_string"
+              }
+            },
+            {
+              "IPSetReferenceStatement": {
+                "ARN": "replace_PARTNERS_string"
+              }
+            }
+          ]
+        }
+      },
+      "Action": {
+        "Allow": {}
+      },
+      "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "AllowIPAddresses"
+      }
+  },
+  {
+      "Name": "ExcludeFalsePositives",
+      "Priority": 4,
+      "Statement": {
+        "OrStatement": {
+          "Statements": [
+            {
+              "ByteMatchStatement": {
+                "SearchString": "/mobile/onboarding/list-numbers-for-country",
+                "FieldToMatch": {
+                  "UriPath": {}
+                },
+                "TextTransformations": [
+                  {
+                    "Priority": 0,
+                    "Type": "NONE"
+                  }
+                ],
+                "PositionalConstraint": "STARTS_WITH"
+              }
+            },
+            {
+              "ByteMatchStatement": {
+                "SearchString": "L21vYmlsZS92Mi9zYXZlLW11bHRpcGxlLXNpbXBsZS1jb250YWN0cw==",
+                "FieldToMatch": {
+                  "UriPath": {}
+                },
+                "TextTransformations": [
+                  {
+                    "Priority": 0,
+                    "Type": "NONE"
+                  }
+                ],
+                "PositionalConstraint": "STARTS_WITH"
+              }
+            }
+          ]
+        }
+      },
+      "Action": {
+        "Allow": {}
+      },
+      "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "ExcludeFalsePositives"
+      }
+  }
+]

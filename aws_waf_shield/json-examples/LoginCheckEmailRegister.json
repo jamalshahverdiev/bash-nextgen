@@ -1,0 +1,65 @@
+{
+    "Name": "LoginCheckEmailRegister",
+    "Priority": 0,
+    "Statement": {
+      "AndStatement": {
+        "Statements": [
+          {
+            "RegexPatternSetReferenceStatement": {
+              "FieldToMatch": {
+                "UriPath": {}
+              },
+              "ARN": "arn:aws:wafv2:eu-west-1:618785321544:regional/regexpatternset/AccountTakeOverEndPoints/15325ad3-ada1-4ac2-bed0-44a7a9852db5",
+              "TextTransformations": [
+                {
+                  "Type": "NONE",
+                  "Priority": 0
+                }
+              ]
+            }
+          },
+          {
+            "OrStatement": {
+              "Statements": [
+                {
+                  "LabelMatchStatement": {
+                    "Scope": "LABEL",
+                    "Key": "awswaf:managed:aws:amazon-ip-list:AWSManagedIPReputationList"
+                  }
+                },
+                {
+                  "LabelMatchStatement": {
+                    "Scope": "LABEL",
+                    "Key": "awswaf:managed:aws:anonymous-ip-list:HostingProviderIPList"
+                  }
+                },
+                {
+                  "LabelMatchStatement": {
+                    "Scope": "LABEL",
+                    "Key": "awswaf:managed:aws:bot-control:signal:known_bot_data_center"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "Action": {
+      "Count": {
+        "CustomRequestHandling": {
+          "InsertHeaders": [
+            {
+              "Name": "bad-ip",
+              "Value": "true"
+            }
+          ]
+        }
+      }
+    },
+    "VisibilityConfig": {
+      "SampledRequestsEnabled": true,
+      "CloudWatchMetricsEnabled": true,
+      "MetricName": "LoginCheckEmailRegister"
+    }
+}

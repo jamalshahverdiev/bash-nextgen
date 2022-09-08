@@ -8,4 +8,5 @@ Folder contains BASH code files related multiple projects
 * `Blue/Green and InPlace deployment in AWS Opsworks with ALB and ELB <https://github.com/jamalshahverdiev/bash-nextgen/tree/main/deploy_opsworks_with_alb>`_
 * `Create/Compare/Update AWS Cloudwatch alarms by CSV database of each environment <https://github.com/jamalshahverdiev/bash-nextgen/tree/main/create_compare_update_cloudwatch_alarms>`_
 * `Create AWS Cloudwatch alarms <https://github.com/jamalshahverdiev/bash-nextgen/tree/main/create_cloudwatch_alarms>`_
+* `Create AWS WAF rules related on any of AWS WAF objects <https://github.com/jamalshahverdiev/bash-nextgen/tree/main/aws_waf_shield>`_
 

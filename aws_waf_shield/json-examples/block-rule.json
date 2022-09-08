@@ -1,0 +1,31 @@
+[
+    {
+        "Name": "BlockUserAgent",
+        "Priority": 0,
+        "Statement": {
+        "ByteMatchStatement": {
+            "SearchString": "b25vZmYtYW5kcm9pZC8yLjE2LjMgKEFuZHJvaWQ7IEdvb2dsZSBQaXhlbCBYTDsgMjg7IHZlci4gOSk=",
+            "FieldToMatch": {
+            "SingleHeader": {
+                "Name": "user-agent"
+            }
+            },
+            "TextTransformations": [
+            {
+                "Priority": 0,
+                "Type": "NONE"
+            }
+            ],
+            "PositionalConstraint": "CONTAINS"
+        }
+        },
+        "Action": {
+        "Count": {}
+        },
+        "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "BlockUserAgent"
+        }
+    }
+]

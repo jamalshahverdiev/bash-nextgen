@@ -1,0 +1,207 @@
+[
+    {
+        "Name": "LoginCheckEmailRegister-AddHeader",
+        "Priority": 0,
+        "Statement": {
+            "AndStatement": {
+                "Statements": [
+                    {
+                        "RegexPatternSetReferenceStatement": {
+                            "ARN": "replace_AccountTakeOverEndPoints_string",
+                            "FieldToMatch": {
+                                "UriPath": {}
+                            },
+                            "TextTransformations": [
+                                {
+                                    "Priority": 0,
+                                    "Type": "NONE"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "OrStatement": {
+                            "Statements": [
+                                {
+                                    "LabelMatchStatement": {
+                                        "Scope": "LABEL",
+                                        "Key": "awswaf:managed:aws:amazon-ip-list:AWSManagedIPReputationList"
+                                    }
+                                },
+                                {
+                                    "LabelMatchStatement": {
+                                        "Scope": "LABEL",
+                                        "Key": "awswaf:managed:aws:anonymous-ip-list:HostingProviderIPList"
+                                    }
+                                },
+                                {
+                                    "LabelMatchStatement": {
+                                        "Scope": "LABEL",
+                                        "Key": "awswaf:managed:aws:bot-control:signal:known_bot_data_center"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "Action": {
+            "Count": {
+                "CustomRequestHandling": {
+                    "InsertHeaders": [
+                        {
+                            "Name": "bad-ip",
+                            "Value": "true"
+                        }
+                    ]
+                }
+            }
+        },
+        "VisibilityConfig": {
+            "SampledRequestsEnabled": true,
+            "CloudWatchMetricsEnabled": true,
+            "MetricName": "LoginCheckEmailRegister-AddHeader"
+        }
+    },
+    {
+        "Name": "BadUserAgent-Block",
+        "Priority": 1,
+        "Statement": {
+            "AndStatement": {
+                "Statements": [
+                    {
+                        "RegexPatternSetReferenceStatement": {
+                            "ARN": "replace_AccountTakeOverEndPoints_string",
+                            "FieldToMatch": {
+                                "UriPath": {}
+                            },
+                            "TextTransformations": [
+                                {
+                                    "Priority": 0,
+                                    "Type": "NONE"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "ByteMatchStatement": {
+                            "SearchString": "b25vZmYtYW5kcm9pZC8yLjE3LjIgKEFuZHJvaWQ7IFNNLUc5NzNOOyAyNTsgdmVyLiA3LjEuMik=",
+                            "FieldToMatch": {
+                                "SingleHeader": {
+                                    "Name": "user-agent"
+                                }
+                            },
+                            "TextTransformations": [
+                                {
+                                    "Priority": 0,
+                                    "Type": "NONE"
+                                }
+                            ],
+                            "PositionalConstraint": "EXACTLY"
+                        }
+                    },
+                    {
+                        "NotStatement": {
+                            "Statement": {
+                                "GeoMatchStatement": {
+                                    "CountryCodes": [
+                                        "BE",
+                                        "BJ",
+                                        "CI",
+                                        "FR",
+                                        "IL",
+                                        "LU"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "Action": {
+            "Block": {}
+        },
+        "VisibilityConfig": {
+            "SampledRequestsEnabled": true,
+            "CloudWatchMetricsEnabled": true,
+            "MetricName": "BadUserAgent-Block"
+        }
+    },
+    {
+        "Name": "LoginCheckEmailRegister-Block",
+        "Priority": 2,
+        "Statement": {
+            "AndStatement": {
+                "Statements": [
+                    {
+                        "RegexPatternSetReferenceStatement": {
+                            "ARN": "replace_AccountTakeOverEndPoints_string",
+                            "FieldToMatch": {
+                                "UriPath": {}
+                            },
+                            "TextTransformations": [
+                                {
+                                    "Priority": 0,
+                                    "Type": "NONE"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "NotStatement": {
+                            "Statement": {
+                                "GeoMatchStatement": {
+                                    "CountryCodes": [
+                                        "BE",
+                                        "BJ",
+                                        "CI",
+                                        "FR",
+                                        "IL",
+                                        "LU",
+                                        "GB",
+                                        "CA",
+                                        "US"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "OrStatement": {
+                            "Statements": [
+                                {
+                                    "LabelMatchStatement": {
+                                        "Scope": "LABEL",
+                                        "Key": "awswaf:managed:aws:amazon-ip-list:AWSManagedIPReputationList"
+                                    }
+                                },
+                                {
+                                    "LabelMatchStatement": {
+                                        "Scope": "LABEL",
+                                        "Key": "awswaf:managed:aws:anonymous-ip-list:HostingProviderIPList"
+                                    }
+                                },
+                                {
+                                    "LabelMatchStatement": {
+                                        "Scope": "LABEL",
+                                        "Key": "awswaf:managed:aws:bot-control:signal:known_bot_data_center"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "Action": {
+            "Block": {}
+        },
+        "VisibilityConfig": {
+            "SampledRequestsEnabled": true,
+            "CloudWatchMetricsEnabled": true,
+            "MetricName": "LoginCheckEmailRegister-Block"
+        }
+    }
+]
