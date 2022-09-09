@@ -1,0 +1,32 @@
+pipeline {
+    agent { label 'backup-controller-production' }
+    options {
+        timestamps ()
+        buildDiscarder(logRotator(numToKeepStr: '100'))
+    }
+    stages {
+        stage('Check new script from repository') {
+            steps {
+                checkout([$class                           : 'GitSCM', branches: [[name: '*/master']],
+                          doGenerateSubmoduleConfigurations: false,
+                          extensions                       : [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'db-backup-v2']]]], submoduleCfg: [],
+                          userRemoteConfigs                : [[credentialsId: '238478sd-34hs-sj43-xf34-123jash93nah', url: 'git@bitbucket.org:projecttelecom/project-tools.git']]])
+            }
+        }
+        stage('Execute backup script') {
+            steps {
+                withAWS(credentials: 'RDS_backup_user', region: 'eu-west-1') {
+                    sh '''
+                    pushd db-backup-v2
+                    #bash -xe backup.sh -i production-hot-db -u 'rds-production@offline-backups.projectapp.net:/storage/rds-production/ 22' -u 'rds-production@city.projectapp.net:/storage/rds-production/ 24422'
+                    bash -xe backup.sh -i production-hot-db -u 'rds-production@offline-backups.projectapp.net:/storage/rds-production/ 22'
+                    if [ $? -eq 0 ]; then ssh rds-production@offline-backups.projectapp.net "~/scripts/copy_to_city.sh"; fi
+                    popd
+                    '''
+                }
+                slackSend channel: '#devops', color: 'good', message: ":sailboat: <${env.BUILD_URL}|Jenkins job> successfully archived TAR for the production."
+            }
+        }
+    }
+    post { failure { slackSend channel: '#devops', color: 'danger', message: ':skull: Backup process of the MySQL database was unsuccessful.' } }
+}
