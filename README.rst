@@ -10,4 +10,5 @@ Folder contains BASH code files related multiple projects
 * `Create AWS Cloudwatch alarms <https://github.com/jamalshahverdiev/bash-nextgen/tree/main/create_cloudwatch_alarms>`_
 * `Create AWS WAF rules related on any of AWS WAF objects <https://github.com/jamalshahverdiev/bash-nextgen/tree/main/aws_waf_shield>`_
 * `Verify AWS RDS snapshot, then get full backup from snapshot with statistics to compare at restore time <https://github.com/jamalshahverdiev/bash-nextgen/tree/main/aws_rds_mysql_backup_restore>`_
+* `Create Debian Live CD ISO <https://github.com/jamalshahverdiev/bash-nextgen/tree/main/create_debian_live_iso>`_
 
