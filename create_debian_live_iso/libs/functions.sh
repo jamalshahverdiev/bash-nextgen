@@ -14,8 +14,8 @@ check_required_packages() {
 check_user_id() {
     # Check user is `root`
     if [ "$(id -u)" -ne "0" ]; then
-    echo "This script must be run as root"
-    exit 1
+        echo "This script must be run as root"
+        exit 1
     fi
 }
 
@@ -30,13 +30,13 @@ manage_mounts() {
         log "Invalid number of arguments to manage_mounts"
         exit 1
     fi
-
+    
     # Check the argument
     if [ "$1" != "mount" ] && [ "$1" != "umount" ]; then
         log "Invalid argument to manage_mounts: $1"
         exit 1
     fi
-
+    
     # Perform the mount/unmount operation
     if [ "$1" == "mount" ]; then
         for dir in "${bind_mounts[@]}"; do
@@ -55,27 +55,27 @@ prepare_fs_struct_for_iso(){
     # Prepare File system structure for ISO
     log "Creating the ISO image..."
     mkdir -p ${WORK_DIR}/image/{live,isolinux}
-
+    
     # Check for kernel file
     KERNEL_FILE=$(ls ${WORK_DIR}/chroot/boot/vmlinuz-* 2> /dev/null | head -n 1)
     if [[ ! -e "${KERNEL_FILE}" ]]; then
-       log "Kernel file not found in ${WORK_DIR}/chroot/boot/"
-       exit 1
+        log "Kernel file not found in ${WORK_DIR}/chroot/boot/"
+        exit 1
     else
-       log "Copying kernel file ${KERNEL_FILE} to ${WORK_DIR}/image/live/vmlinuz"
-       cp "${KERNEL_FILE}" "${WORK_DIR}/image/live/vmlinuz"
+        log "Copying kernel file ${KERNEL_FILE} to ${WORK_DIR}/image/live/vmlinuz"
+        cp "${KERNEL_FILE}" "${WORK_DIR}/image/live/vmlinuz"
     fi
-
+    
     # Check for initrd file
     INITRD_FILE=$(ls ${WORK_DIR}/chroot/boot/initrd.img-* 2> /dev/null | head -n 1)
     if [[ ! -e "${INITRD_FILE}" ]]; then
-       log "Initrd file not found in ${WORK_DIR}/chroot/boot/"
-       exit 1
+        log "Initrd file not found in ${WORK_DIR}/chroot/boot/"
+        exit 1
     else
-       log "Copying initrd file ${INITRD_FILE} to ${WORK_DIR}/image/live/initrd"
-       cp "${INITRD_FILE}" "${WORK_DIR}/image/live/initrd"
+        log "Copying initrd file ${INITRD_FILE} to ${WORK_DIR}/image/live/initrd"
+        cp "${INITRD_FILE}" "${WORK_DIR}/image/live/initrd"
     fi
-
+    
     # Copy isolinux.bin and other required files into the image directory
     log "Copying isolinux files..."
     cp /usr/lib/ISOLINUX/isolinux.bin ${WORK_DIR}/image/isolinux/
